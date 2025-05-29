@@ -5,6 +5,8 @@ import SubmitButton from "./Components/SubmitButton";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function App() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
@@ -17,7 +19,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/tasks")
+      .get(`${API_URL}/tasks`)
       .then((response) => {
         setTaskList(response.data.tasks);
       })
@@ -30,7 +32,7 @@ function App() {
 
   const handleTaskCompleted = (taskId, currentCompleted) => {
     axios
-      .put(`http://localhost:3000/tasks/${taskId}`, {
+      .put(`${API_URL}/${taskId}`, {
         completed: !currentCompleted,
       })
       .then(() => {
@@ -52,7 +54,7 @@ function App() {
 
   const handleDltTask = (taskId) => {
     axios
-      .delete(`http://localhost:3000/tasks/${taskId}`)
+      .delete(`${API_URL}/${taskId}`)
       .then(() => {
         setTaskList((prevTasks) =>
           prevTasks.filter((task) => task._id !== taskId)
@@ -76,7 +78,7 @@ function App() {
   // Save edited task to backend and update UI
   const handleSaveEditTask = (taskId) => {
     axios
-      .put(`http://localhost:3000/tasks/${taskId}`, {
+      .put(`${API_URL}/${taskId}`, {
         title: editTitle,
         description: editDescription,
       })

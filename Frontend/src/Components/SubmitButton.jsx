@@ -11,7 +11,7 @@ function SubmitButton({
     if (!newTaskTitle) return;
 
     axios
-      .post("http://localhost:3000/tasks", {
+      .post("https://todo-app-mern-3deh.vercel.app/tasks", {
         title: newTaskTitle,
         description: newTaskDescription,
       })
