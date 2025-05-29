@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function App() {
+  console.log("REACT_APP_API_URL:", process.env.REACT_APP_API_URL);
+
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
   const [taskList, setTaskList] = useState([]);
