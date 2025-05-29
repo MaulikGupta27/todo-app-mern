@@ -7,8 +7,10 @@ yarn-debug.log*
 pnpm-debug.log*  
 *.log  
 
-# Environment variables  
-.env  
+# Environment variables
+.env
+.env.*.backup
+.env.local
 
 # Build files  
 dist/  
