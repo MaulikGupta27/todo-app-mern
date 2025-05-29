@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-  console.log("App component loaded. API_URL is set");
+  console.log("App initialized. Using API_URL:", API_URL);
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
@@ -20,15 +20,13 @@ function App() {
   const [editDescription, setEditDescription] = useState("");
 
   useEffect(() => {
-    console.log("Fetching tasks from backend");
     axios
       .get(`${API_URL}/tasks`)
       .then((response) => {
         setTaskList(response.data.tasks);
-        console.log("Tasks fetched successfully");
+        console.log("Fetched tasks successfully.");
       })
       .catch((error) => {
-        console.error("Error fetching tasks");
         const errorMsg =
           error.response?.data?.error || "Failed to fetch tasks.";
         toast.error(errorMsg);
@@ -36,13 +34,11 @@ function App() {
   }, []);
 
   const handleTaskCompleted = (taskId, currentCompleted) => {
-    console.log("Updating completion for task ID", taskId);
     axios
       .put(`${API_URL}/tasks/${taskId}`, {
         completed: !currentCompleted,
       })
       .then(() => {
-        console.log("Completion updated for task ID", taskId);
         setTaskList((prevTasks) =>
           prevTasks.map((task) =>
             task._id === taskId
@@ -51,9 +47,9 @@ function App() {
           )
         );
         toast.success("Task status updated.");
+        console.log("Task completion toggled:", taskId);
       })
       .catch((error) => {
-        console.error("Error updating task completion");
         const errorMsg =
           error.response?.data?.error || "Failed to update task.";
         toast.error(errorMsg);
@@ -61,18 +57,16 @@ function App() {
   };
 
   const handleDltTask = (taskId) => {
-    console.log("Deleting task ID", taskId);
     axios
       .delete(`${API_URL}/tasks/${taskId}`)
       .then(() => {
-        console.log("Task deleted with ID", taskId);
         setTaskList((prevTasks) =>
           prevTasks.filter((task) => task._id !== taskId)
         );
         toast.success("Task deleted successfully.");
+        console.log("Task deleted:", taskId);
       })
       .catch((error) => {
-        console.error("Error deleting task");
         const errorMsg =
           error.response?.data?.error || "Failed to delete task.";
         toast.error(errorMsg);
@@ -81,22 +75,20 @@ function App() {
 
   // Start editing a task: set editing states
   const handleStartEditTask = (task) => {
-    console.log("Editing started for task ID", task._id);
     setEditingTaskId(task._id);
     setEditTitle(task.title);
     setEditDescription(task.description);
+    console.log("Editing task:", task._id);
   };
 
   // Save edited task to backend and update UI
   const handleSaveEditTask = (taskId) => {
-    console.log("Saving edits for task ID", taskId);
     axios
       .put(`${API_URL}/tasks/${taskId}`, {
         title: editTitle,
         description: editDescription,
       })
       .then(() => {
-        console.log("Edits saved for task ID", taskId);
         setTaskList((prevTasks) =>
           prevTasks.map((task) =>
             task._id === taskId
@@ -106,9 +98,9 @@ function App() {
         );
         setEditingTaskId(null);
         toast.success("Task updated successfully.");
+        console.log("Task updated:", taskId);
       })
       .catch((error) => {
-        console.error("Error updating task");
         const errorMsg =
           error.response?.data?.error || "Failed to update task.";
         toast.error(errorMsg);
@@ -117,7 +109,6 @@ function App() {
 
   // Cancel editing mode
   const handleCancelEdit = () => {
-    console.log("Editing cancelled");
     setEditingTaskId(null);
     setEditTitle("");
     setEditDescription("");
