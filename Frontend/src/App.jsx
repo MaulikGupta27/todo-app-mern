@@ -34,7 +34,7 @@ function App() {
 
   const handleTaskCompleted = (taskId, currentCompleted) => {
     axios
-      .put(`${API_URL}/${taskId}`, {
+      .put(`${API_URL}/tasks/${taskId}`, {
         completed: !currentCompleted,
       })
       .then(() => {
@@ -56,7 +56,7 @@ function App() {
 
   const handleDltTask = (taskId) => {
     axios
-      .delete(`${API_URL}/${taskId}`)
+      .delete(`${API_URL}/tasks/${taskId}`)
       .then(() => {
         setTaskList((prevTasks) =>
           prevTasks.filter((task) => task._id !== taskId)
@@ -80,7 +80,7 @@ function App() {
   // Save edited task to backend and update UI
   const handleSaveEditTask = (taskId) => {
     axios
-      .put(`${API_URL}/${taskId}`, {
+      .put(`${API_URL}/tasks/${taskId}`, {
         title: editTitle,
         description: editDescription,
       })
