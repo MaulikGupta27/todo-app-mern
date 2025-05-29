@@ -8,7 +8,11 @@ const cors = require("cors");
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://todo-app-mern-3deh.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json());
 
 connectToDB(`${process.env.DB_URL}/${DB_NAME}`);
