@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-  console.log("App initialized. Using API_URL:", API_URL);
+  console.log("App initialized");
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
@@ -24,7 +24,7 @@ function App() {
       .get(`${API_URL}/tasks`)
       .then((response) => {
         setTaskList(response.data.tasks);
-        console.log("Fetched tasks successfully.");
+        console.log("Fetched tasks successfully");
       })
       .catch((error) => {
         const errorMsg =
@@ -47,7 +47,6 @@ function App() {
           )
         );
         toast.success("Task status updated.");
-        console.log("Task completion toggled:", taskId);
       })
       .catch((error) => {
         const errorMsg =
@@ -64,7 +63,6 @@ function App() {
           prevTasks.filter((task) => task._id !== taskId)
         );
         toast.success("Task deleted successfully.");
-        console.log("Task deleted:", taskId);
       })
       .catch((error) => {
         const errorMsg =
@@ -78,7 +76,7 @@ function App() {
     setEditingTaskId(task._id);
     setEditTitle(task.title);
     setEditDescription(task.description);
-    console.log("Editing task:", task._id);
+    console.log("Editing started for task:", task._id);
   };
 
   // Save edited task to backend and update UI
@@ -98,7 +96,6 @@ function App() {
         );
         setEditingTaskId(null);
         toast.success("Task updated successfully.");
-        console.log("Task updated:", taskId);
       })
       .catch((error) => {
         const errorMsg =
